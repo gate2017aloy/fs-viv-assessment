@@ -1,9 +1,12 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from app.models.songs import Song
 
 
 def get_songs(db: Session, limit: int, offset: int):
-    return db.query(Song).offset(offset).limit(limit).all()
+    total = db.query(func.count(Song.id)).scalar()
+    items = db.query(Song).offset(offset).limit(limit).all()
+    return {"songs": items, "total": total}
 
 
 def get_song_by_title(db: Session, title: str):
