@@ -1,7 +1,8 @@
-import axios from "axios"
+import { GetSongsResponse, getSongs } from "@/api"
+import { Songs } from "@/feat/songs"
 
 const fetchBanks = async () => {
-  const { data } = await axios.get("https://jsonplaceholder.typicode.com/todos/1")
+  const data = await getSongs()
   return data
 }
 
@@ -12,17 +13,10 @@ type Bank = {
   completed: boolean
 }
 
-export default async function Page() {
-  const banks: Bank = await fetchBanks()
+export default async function SongsPage() {
+  const songs: GetSongsResponse = await fetchBanks()
 
   return (
-    <div className="flex min-h-svh p-6">
-      <div>
-        <h1>{banks.title}</h1>
-        <p>{banks.completed.toString()}</p>
-        <p>{banks.id}</p>
-        <p>{banks.userId}</p>
-      </div>
-    </div>
+    <Songs songs={songs} />
   )
 }
