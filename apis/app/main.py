@@ -4,11 +4,13 @@ from fastapi.concurrency import asynccontextmanager
 
 logger = logging.getLogger("uvicorn.error")
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Application started")
     yield
     logger.info("Application stopped")
+
 
 app = FastAPI(
     title="FS Viv Assessment API",
@@ -16,6 +18,7 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
+
 
 @app.get("/")
 async def root():
