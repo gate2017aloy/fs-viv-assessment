@@ -1,0 +1,15 @@
+# Run unit tests
+test:
+    uv run pytest
+
+# Lint check with ruff
+lint:
+    uv run ruff check .
+
+# Format code with ruff
+format:
+    uv run ruff format .
+
+# Type check with mypy
+typecheck:
+    uv run mypy .
