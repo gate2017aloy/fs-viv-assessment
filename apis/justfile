@@ -2,6 +2,11 @@
 install:
 	uv sync
 
+# Run the ingestion service
+ingest:
+	uv run python3 -m app.cli
+
+
 # Run the FastAPI server in dev mode
 run:
 	uv run uvicorn app.main:app --reload
