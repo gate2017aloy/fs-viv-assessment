@@ -8,8 +8,12 @@ ingest:
 
 
 # Run the FastAPI server in dev mode
-run:
+serve:
 	uv run uvicorn app.main:app --reload
+
+# install, ingest and serve
+run:
+	just install && just ingest && just serve
 
 # Run unit tests
 test:
