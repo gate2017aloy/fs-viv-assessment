@@ -1,7 +1,7 @@
 "use client"
 
 import { GetSongsResponse } from "@/api"
-import { useSongs } from "./use-songs"
+import { useSongs } from "./hooks"
 import {
   PaginationControls,
   TrackHeader,
