@@ -14,25 +14,25 @@ export const SummaryStats = ({
 }: SummaryStatsProps) => {
   return (
     <div className="flex items-center gap-4">
-      <div className="flex flex-col px-4 py-2 bg-card/45 border border-border/50 rounded-xl min-w-28">
-        <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
+      <div className="flex min-w-28 flex-col rounded-xl border border-border/50 bg-card/45 px-4 py-2">
+        <span className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
           Total Tracks
         </span>
-        <span className="text-xl font-bold font-mono">{totalSongs}</span>
+        <span className="font-mono text-xl font-bold">{totalSongs}</span>
       </div>
-      <div className="flex flex-col px-4 py-2 bg-card/45 border border-border/50 rounded-xl min-w-28">
-        <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider flex items-center gap-1">
+      <div className="flex min-w-28 flex-col rounded-xl border border-border/50 bg-card/45 px-4 py-2">
+        <span className="flex items-center gap-1 text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
           <Sparkles className="size-3 text-cyan-400" /> Avg Dance
         </span>
-        <span className="text-xl font-bold font-mono text-cyan-500 dark:text-cyan-400">
+        <span className="font-mono text-xl font-bold text-cyan-500 dark:text-cyan-400">
           {(avgDanceability * 100).toFixed(0)}%
         </span>
       </div>
-      <div className="flex flex-col px-4 py-2 bg-card/45 border border-border/50 rounded-xl min-w-28">
-        <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider flex items-center gap-1">
+      <div className="flex min-w-28 flex-col rounded-xl border border-border/50 bg-card/45 px-4 py-2">
+        <span className="flex items-center gap-1 text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
           <Zap className="size-3 text-amber-500" /> Avg Energy
         </span>
-        <span className="text-xl font-bold font-mono text-amber-500">
+        <span className="font-mono text-xl font-bold text-amber-500">
           {(avgEnergy * 100).toFixed(0)}%
         </span>
       </div>

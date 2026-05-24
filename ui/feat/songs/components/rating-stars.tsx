@@ -20,14 +20,17 @@ export const RatingStars = ({
   return (
     <div className="flex items-center gap-1">
       {[1, 2, 3, 4, 5].map((star) => {
-        const isFilled = hoverRating !== null ? star <= hoverRating : star <= currentRating
+        const isFilled =
+          hoverRating !== null ? star <= hoverRating : star <= currentRating
         return (
           <button
             key={star}
             type="button"
             disabled={disabled}
-            className={`transition-all duration-150 relative ${
-              disabled ? "opacity-60 cursor-not-allowed" : "cursor-pointer hover:scale-110 active:scale-95"
+            className={`relative transition-all duration-150 ${
+              disabled
+                ? "cursor-not-allowed opacity-60"
+                : "cursor-pointer hover:scale-110 active:scale-95"
             }`}
             onClick={() => onChange(songId, star)}
             onMouseEnter={() => !disabled && setHoverRating(star)}

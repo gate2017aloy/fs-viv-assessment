@@ -30,8 +30,8 @@ export interface Song {
   num_bars?: number
   num_sections?: number
   num_segments?: number
-  class?: number        // JSON field mapped to "class" Column in DB
-  class_label?: number  // fallback mapping if backend uses attribute name
+  class?: number // JSON field mapped to "class" Column in DB
+  class_label?: number // fallback mapping if backend uses attribute name
   rating?: number | null
 }
 

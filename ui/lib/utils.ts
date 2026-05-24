@@ -22,4 +22,3 @@ export function formatLoudness(dB?: number): string {
   if (dB === undefined) return "-"
   return `${dB.toFixed(1)} dB`
 }
-

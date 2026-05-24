@@ -20,9 +20,9 @@ export const SongProgressBar = ({
       <div className="flex items-center gap-3">
         <Progress
           value={value * 100}
-          className={cn("w-16 h-1.5 shrink-0", indicatorColorClass)}
+          className={cn("h-1.5 w-16 shrink-0", indicatorColorClass)}
         />
-        <span className="text-xs font-mono font-semibold">
+        <span className="font-mono text-xs font-semibold">
           {(value * 100).toFixed(0)}%
         </span>
       </div>
@@ -36,7 +36,7 @@ export const SongProgressBar = ({
     <div className="space-y-1">
       {label && (
         <div className="flex items-center justify-between text-xs select-none">
-          <span className="text-muted-foreground font-medium">{label}</span>
+          <span className="font-medium text-muted-foreground">{label}</span>
           <span className="font-mono font-bold text-foreground">
             {value !== undefined ? `${(value * 100).toFixed(0)}%` : "-"}
           </span>
@@ -48,7 +48,7 @@ export const SongProgressBar = ({
           className={cn("h-1.5", indicatorColorClass)}
         />
       ) : (
-        <div className="h-1.5 w-full bg-muted/40 rounded-full" />
+        <div className="h-1.5 w-full rounded-full bg-muted/40" />
       )}
     </div>
   )

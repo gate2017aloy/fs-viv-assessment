@@ -16,7 +16,5 @@ type Bank = {
 export default async function SongsPage() {
   const songs: GetSongsResponse = await fetchBanks()
 
-  return (
-    <Songs songs={songs} />
-  )
+  return <Songs songs={songs} />
 }

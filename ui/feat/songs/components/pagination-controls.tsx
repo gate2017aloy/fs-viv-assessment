@@ -25,7 +25,7 @@ export const PaginationControls = ({
   getPageNumbers,
 }: PaginationControlsProps) => {
   return (
-    <Pagination className="w-auto mx-0">
+    <Pagination className="mx-0 w-auto">
       <PaginationContent>
         {/* Previous Page */}
         <PaginationItem>
@@ -35,7 +35,11 @@ export const PaginationControls = ({
               if (currentPage > 1) setCurrentPage((p) => p - 1)
             }}
             href="#"
-            className={currentPage === 1 || isLoading ? "pointer-events-none opacity-50" : ""}
+            className={
+              currentPage === 1 || isLoading
+                ? "pointer-events-none opacity-50"
+                : ""
+            }
           />
         </PaginationItem>
 
@@ -73,7 +77,11 @@ export const PaginationControls = ({
               if (currentPage < totalPages) setCurrentPage((p) => p + 1)
             }}
             href="#"
-            className={currentPage === totalPages || totalPages === 0 || isLoading ? "pointer-events-none opacity-50" : ""}
+            className={
+              currentPage === totalPages || totalPages === 0 || isLoading
+                ? "pointer-events-none opacity-50"
+                : ""
+            }
           />
         </PaginationItem>
       </PaginationContent>

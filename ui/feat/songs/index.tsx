@@ -14,7 +14,6 @@ interface SongsProps {
   songs: GetSongsResponse
 }
 
-
 export const Songs = ({ songs: initialSongs }: SongsProps) => {
   // Consume all state and business logic from the headless hook
   const {
@@ -35,11 +34,10 @@ export const Songs = ({ songs: initialSongs }: SongsProps) => {
     avgEnergy,
   } = useSongs(initialSongs)
 
-
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 md:py-12 space-y-8 select-none">
+    <div className="mx-auto max-w-7xl space-y-8 px-4 py-8 select-none md:py-12">
       {/* Title Header with Modern Gradient */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-border/60 pb-6">
+      <div className="flex flex-col gap-4 border-b border-border/60 pb-6 md:flex-row md:items-center md:justify-between">
         <TrackHeader />
 
         {/* Dynamic Summary Cards */}
@@ -51,7 +49,7 @@ export const Songs = ({ songs: initialSongs }: SongsProps) => {
       </div>
 
       {/* Main Glassmorphic Table Container */}
-      <div className="bg-card/30 border border-border/75 rounded-2xl shadow-lg overflow-hidden backdrop-blur-sm">
+      <div className="overflow-hidden rounded-2xl border border-border/75 bg-card/30 shadow-lg backdrop-blur-sm">
         <div className="w-full overflow-x-auto">
           <SongsTable
             songs={songs}
@@ -63,7 +61,7 @@ export const Songs = ({ songs: initialSongs }: SongsProps) => {
         </div>
 
         {/* Premium Pagination Footer */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-5 border-t border-border/75 bg-muted/20">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-border/75 bg-muted/20 p-5 sm:flex-row">
           {/* Left Side: Page entries & Size Selector */}
           <PageSizeSelector
             startItem={startItem}
@@ -88,5 +86,3 @@ export const Songs = ({ songs: initialSongs }: SongsProps) => {
     </div>
   )
 }
-
-

@@ -27,7 +27,9 @@ export const useSongs = (initialSongs: GetSongsResponse) => {
           return {
             ...oldData,
             songs: oldData.songs.map((song) =>
-              song.id === updatedSong.id ? { ...song, rating: updatedSong.rating } : song
+              song.id === updatedSong.id
+                ? { ...song, rating: updatedSong.rating }
+                : song
             ),
           }
         }
@@ -72,13 +74,15 @@ export const useSongs = (initialSongs: GetSongsResponse) => {
   }
 
   // Dashboard Stats (Calculated on current page data)
-  const avgDanceability = songs.length > 0
-    ? songs.reduce((acc, s) => acc + (s.danceability ?? 0), 0) / songs.length
-    : 0
+  const avgDanceability =
+    songs.length > 0
+      ? songs.reduce((acc, s) => acc + (s.danceability ?? 0), 0) / songs.length
+      : 0
 
-  const avgEnergy = songs.length > 0
-    ? songs.reduce((acc, s) => acc + (s.energy ?? 0), 0) / songs.length
-    : 0
+  const avgEnergy =
+    songs.length > 0
+      ? songs.reduce((acc, s) => acc + (s.energy ?? 0), 0) / songs.length
+      : 0
 
   return {
     songs,

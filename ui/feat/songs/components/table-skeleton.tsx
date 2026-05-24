@@ -13,7 +13,7 @@ export const TableSkeleton = ({ rows = 5 }: TableSkeletonProps) => {
         <TableRow key={idx} className="border-border/40">
           <TableCell>
             <div className="flex items-center gap-3">
-              <Skeleton className="size-8 rounded-lg shrink-0" />
+              <Skeleton className="size-8 shrink-0 rounded-lg" />
               <div className="space-y-2">
                 <Skeleton className="h-4 w-32" />
                 <Skeleton className="h-3 w-16 opacity-60" />
@@ -59,4 +59,3 @@ export const TableSkeleton = ({ rows = 5 }: TableSkeletonProps) => {
     </>
   )
 }
-

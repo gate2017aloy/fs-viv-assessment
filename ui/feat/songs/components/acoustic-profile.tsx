@@ -10,10 +10,10 @@ interface AcousticProfileProps {
 export const AcousticProfile = ({ song }: AcousticProfileProps) => {
   return (
     <div className="space-y-4">
-      <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5 select-none">
+      <h4 className="flex items-center gap-1.5 text-xs font-semibold tracking-wider text-muted-foreground uppercase select-none">
         <Sparkles className="size-3.5 text-cyan-500" /> Acoustic Profile
       </h4>
-      <div className="space-y-3 bg-background/50 border border-border/50 rounded-xl p-4 shadow-sm">
+      <div className="space-y-3 rounded-xl border border-border/50 bg-background/50 p-4 shadow-sm">
         <SongProgressBar
           label="Acousticness"
           value={song.acousticness}
