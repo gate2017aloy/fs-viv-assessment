@@ -9,4 +9,5 @@ export * from "./song-details-row"
 export * from "./song-progress-bar"
 export * from "./musical-specs"
 export * from "./structure-details"
+export * from "./acoustic-profile"
 
