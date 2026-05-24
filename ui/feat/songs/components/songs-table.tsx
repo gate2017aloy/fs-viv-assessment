@@ -1,9 +1,9 @@
 import * as React from "react"
 import { Song } from "@/api"
-import { Progress } from "@/components/ui/progress"
 import { RatingStars } from "./rating-stars"
 import { TableSkeleton } from "./table-skeleton"
 import { SongDetailsRow } from "./song-details-row"
+import { SongProgressBar } from "./song-progress-bar"
 import {
   Table,
   TableHeader,
@@ -41,19 +41,7 @@ interface ProgressCellProps {
 const ProgressCell = ({ value, indicatorColorClass, className }: ProgressCellProps) => {
   return (
     <TableCell className={cn("py-4 px-3", className)}>
-      {value !== undefined ? (
-        <div className="flex items-center gap-3">
-          <Progress
-            value={value * 100}
-            className={cn("w-16 h-1.5 shrink-0", indicatorColorClass)}
-          />
-          <span className="text-xs font-mono font-semibold">
-            {(value * 100).toFixed(0)}%
-          </span>
-        </div>
-      ) : (
-        <span className="text-muted-foreground/40">-</span>
-      )}
+      <SongProgressBar value={value} indicatorColorClass={indicatorColorClass} variant="inline" />
     </TableCell>
   )
 }

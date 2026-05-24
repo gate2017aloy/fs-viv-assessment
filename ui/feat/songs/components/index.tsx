@@ -6,4 +6,5 @@ export * from "./summary-stats"
 export * from "./songs-table"
 export * from "./page-size-selector"
 export * from "./song-details-row"
+export * from "./song-progress-bar"
 

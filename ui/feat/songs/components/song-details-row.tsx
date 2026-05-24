@@ -1,19 +1,12 @@
 import * as React from "react"
 import { Song } from "@/api"
-import { Progress } from "@/components/ui/progress"
 import { TableRow, TableCell } from "@/components/ui/table"
 import { Sparkles, Music, Zap } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { SongProgressBar } from "./song-progress-bar"
 
 interface SongDetailsRowProps {
   song: Song
   colSpan?: number
-}
-
-interface MetricProgressProps {
-  label: string
-  value?: number
-  indicatorColorClass: string
 }
 
 const getMusicalKeyName = (key?: number, mode?: number): string => {
@@ -27,27 +20,6 @@ const getMusicalKeyName = (key?: number, mode?: number): string => {
   return `${keyName} ${modeName}`.trim()
 }
 
-const MetricProgress = ({ label, value, indicatorColorClass }: MetricProgressProps) => {
-  return (
-    <div className="space-y-1">
-      <div className="flex items-center justify-between text-xs select-none">
-        <span className="text-muted-foreground font-medium">{label}</span>
-        <span className="font-mono font-bold text-foreground">
-          {value !== undefined ? `${(value * 100).toFixed(0)}%` : "-"}
-        </span>
-      </div>
-      {value !== undefined ? (
-        <Progress
-          value={value * 100}
-          className={cn("h-1.5", indicatorColorClass)}
-        />
-      ) : (
-        <div className="h-1.5 w-full bg-muted/40 rounded-full" />
-      )}
-    </div>
-  )
-}
-
 export const SongDetailsRow = ({ song, colSpan = 8 }: SongDetailsRowProps) => {
   return (
     <TableRow className="bg-muted/10 hover:bg-muted/10 border-b border-border/40">
@@ -59,20 +31,23 @@ export const SongDetailsRow = ({ song, colSpan = 8 }: SongDetailsRowProps) => {
               <Sparkles className="size-3.5 text-cyan-500" /> Acoustic Profile
             </h4>
             <div className="space-y-3 bg-background/50 border border-border/50 rounded-xl p-4 shadow-sm">
-              <MetricProgress
+              <SongProgressBar
                 label="Acousticness"
                 value={song.acousticness}
                 indicatorColorClass="[&>[data-slot=progress-indicator]]:bg-emerald-500"
+                variant="stacked"
               />
-              <MetricProgress
+              <SongProgressBar
                 label="Instrumentalness"
                 value={song.instrumentalness}
                 indicatorColorClass="[&>[data-slot=progress-indicator]]:bg-indigo-500"
+                variant="stacked"
               />
-              <MetricProgress
+              <SongProgressBar
                 label="Liveness"
                 value={song.liveness}
                 indicatorColorClass="[&>[data-slot=progress-indicator]]:bg-purple-500"
+                variant="stacked"
               />
             </div>
           </div>
@@ -145,4 +120,5 @@ export const SongDetailsRow = ({ song, colSpan = 8 }: SongDetailsRowProps) => {
     </TableRow>
   )
 }
+
 
