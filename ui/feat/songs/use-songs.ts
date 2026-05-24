@@ -1,17 +1,47 @@
 import { useState } from "react"
-import { GetSongsResponse, getSongs, updateSongRating, Song } from "@/api"
+import {
+  GetSongsResponse,
+  getSongs,
+  updateSongRating,
+  Song,
+  getSongByTitle,
+} from "@/api"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 
 export const useSongs = (initialSongs: GetSongsResponse) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [searchSubmittedQuery, setSearchSubmittedQuery] = useState("")
   const queryClient = useQueryClient()
 
   // Query to fetch songs dynamically using React Query
-  const { data, isLoading } = useQuery<GetSongsResponse>({
+  const { data, isLoading: isSongsLoading } = useQuery<GetSongsResponse>({
     queryKey: ["songs", currentPage, pageSize],
     queryFn: () => getSongs(pageSize, (currentPage - 1) * pageSize),
     placeholderData: (prev) => prev, // Keeps current data visible while fetching next page
+    enabled: !searchSubmittedQuery, // Only fetch all songs if there is no active search
+  })
+
+  // Query to search for a song by exact title using React Query
+  const {
+    data: searchData,
+    isLoading: isSearchLoading,
+    isError: isSearchError,
+  } = useQuery<Song | null>({
+    queryKey: ["song-search", searchSubmittedQuery],
+    queryFn: async () => {
+      if (!searchSubmittedQuery) return null
+      try {
+        const song = await getSongByTitle(searchSubmittedQuery)
+        return song
+      } catch (err) {
+        console.warn("Song not found during search:", err)
+        return null
+      }
+    },
+    enabled: !!searchSubmittedQuery,
+    retry: false, // Don't retry since 404 is a terminal state for search
   })
 
   // Mutation to update song ratings cleanly
@@ -20,28 +50,50 @@ export const useSongs = (initialSongs: GetSongsResponse) => {
       updateSongRating(songId, rating),
     onSuccess: (updatedSong) => {
       // Optimistically update the React Query cache instantly for seamless UI response
-      queryClient.setQueryData<GetSongsResponse>(
-        ["songs", currentPage, pageSize],
-        (oldData) => {
-          if (!oldData) return oldData
-          return {
-            ...oldData,
-            songs: oldData.songs.map((song) =>
-              song.id === updatedSong.id
-                ? { ...song, rating: updatedSong.rating }
-                : song
-            ),
+      if (searchSubmittedQuery) {
+        queryClient.setQueryData<Song | null>(
+          ["song-search", searchSubmittedQuery],
+          (oldData) => {
+            if (!oldData || oldData.id !== updatedSong.id) return oldData
+            return { ...oldData, rating: updatedSong.rating }
           }
-        }
-      )
+        )
+      } else {
+        queryClient.setQueryData<GetSongsResponse>(
+          ["songs", currentPage, pageSize],
+          (oldData) => {
+            if (!oldData) return oldData
+            return {
+              ...oldData,
+              songs: oldData.songs.map((song) =>
+                song.id === updatedSong.id
+                  ? { ...song, rating: updatedSong.rating }
+                  : song
+              ),
+            }
+          }
+        )
+      }
     },
     onError: (error) => {
       console.error("Failed to update song rating:", error)
     },
   })
 
-  const songs = data?.songs ?? initialSongs.songs
-  const totalSongs = data?.total ?? initialSongs.total
+  // Active data based on whether there is an active search query
+  const songs = searchSubmittedQuery
+    ? searchData
+      ? [searchData]
+      : []
+    : (data?.songs ?? initialSongs.songs)
+
+  const totalSongs = searchSubmittedQuery
+    ? searchData
+      ? 1
+      : 0
+    : (data?.total ?? initialSongs.total)
+
+  const isLoading = searchSubmittedQuery ? isSearchLoading : isSongsLoading
 
   // Derive rating saving state natively from TanStack Mutation variables
   const ratingLoadingId = ratingMutation.isPending
@@ -84,6 +136,18 @@ export const useSongs = (initialSongs: GetSongsResponse) => {
       ? songs.reduce((acc, s) => acc + (s.energy ?? 0), 0) / songs.length
       : 0
 
+  const handleSearch = (query: string) => {
+    const trimmed = query.trim()
+    setSearchSubmittedQuery(trimmed)
+    setCurrentPage(1)
+  }
+
+  const handleClearSearch = () => {
+    setSearchQuery("")
+    setSearchSubmittedQuery("")
+    setCurrentPage(1)
+  }
+
   return {
     songs,
     totalSongs,
@@ -101,5 +165,13 @@ export const useSongs = (initialSongs: GetSongsResponse) => {
     getPageNumbers,
     avgDanceability,
     avgEnergy,
+    searchQuery,
+    setSearchQuery,
+    searchSubmittedQuery,
+    handleSearch,
+    handleClearSearch,
+    isSearchError:
+      isSearchError ||
+      (!!searchSubmittedQuery && !isSearchLoading && !searchData),
   }
 }
